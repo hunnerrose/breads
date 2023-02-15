@@ -1,4 +1,7 @@
 const express = require('express')
+// DEPENDENCIES
+const methodOverride = require('method-override')
+
 
 //CONFIGURATION
 require('dotenv').config()
@@ -9,8 +12,12 @@ const app = express()
 // MIDDLEWARE (Here, we are setting up which view engine will be used and requiring JSX so we can utilize it to build our views.)
 app.set('views', __dirname + '/views')
 app.set('view engine', 'jsx')
+    //What's engine again?
 app.engine('jsx', require('express-react-views').createEngine())
 app.use(express.urlencoded({extended: true}))
+// MIDDLEWARE
+app.use(methodOverride('_method'))
+
 
 //ROUTES
 app.get('/', (req, res) => {
