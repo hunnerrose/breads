@@ -26,7 +26,7 @@ app.use(methodOverride('_method'))
 
 mongoose.set('strictQuery', true);
 mongoose.connect(
-    MONGO_URI, 
+    "mongodb://localhost:27017", 
     {
         useNewUrlParser: true, 
         useUnifiedTopology: true
