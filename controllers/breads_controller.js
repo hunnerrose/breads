@@ -46,14 +46,16 @@ bread_router.get('/:arrayIndex', (req, res) => {
 bread_router.post('/', (req, res) => {
     //why does this call for an exclamation mark? v
     if (!req.body.image) {
-      req.body.image = 'https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
+      req.body.image = undefined
     }
     if(req.body.hasGluten === 'on') {
       req.body.hasGluten = true
     } else {
       req.body.hasGluten = false
     }
-    bread_data.push(req.body)
+      //the .create method creates a single document; it's analogous to the .insert method in native Mongo. Similar to the .insert method, it requires you to pass it an object with the info the document should have. We'll use it to create one of our breads.
+
+    bread_data.create(req.body) //req.body is an object that holds all the data we need to create a bread doc. 
     res.redirect('/breads')
   })
 
