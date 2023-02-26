@@ -9,7 +9,7 @@ bread_router.get('/', (req, res) => {
       .then(foundBreads => {
         res.render('index', {
           breads: foundBreads,
-          titlee: 'Index Page'
+          title: 'Index Page'
         })
       })
     // res.render('index', {"breads": bread_data})
@@ -31,15 +31,27 @@ bread_router.get('/new', (req, res) => {
 })
 
 //SHOW
-bread_router.get('/:arrayIndex', (req, res) => {
-    if (bread_data[req.params.arrayIndex]) {
+bread_router.get('/:id', (req, res) => {
+      //.findById returns a promise that holds the return data. Use .then on the method and pass it a callback w/ a variable like we did for .find
+        //to be semantic, we'll name the variable foundBread. It's singular bc we only expect data for one bread.
+    Bread.findById(req.params.id)
+      .then(foundBread => {
+        res.render('show', {
+          bread: foundBread
+        })
+      })
+      .catch (err => {
+        res.send('404')
+      })
+
+    /* if (bread_data[req.params.arrayIndex]) {
         res.render('Show' , {
             bread: bread_data[req.params.arrayIndex],
             index: req.params.arrayIndex,
         })
     } else {
         res.send('404')
-    }
+    } */
 })
 
 // CREATE
