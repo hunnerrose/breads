@@ -1,4 +1,5 @@
 const React = require('react')
+const mongoose = require('mongoose');
 const Default = require('./layouts/Default')
 
 function Index ({breads})  {

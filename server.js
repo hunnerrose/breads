@@ -1,15 +1,14 @@
 const express = require('express')
 // DEPENDENCIES
 const methodOverride = require('method-override')
-//REQUIRE MONGOOSE
+    //REQUIRE MONGOOSE
 const mongoose = require('mongoose')
-
 
 
 //CONFIGURATION
 require('dotenv').config()
-MONGO_URI = process.env.MONGO_URI
 const PORT = process.env.PORT
+const MONGO_URI = process.env.MONGO_URI
 // console.log(PORT)
 const app = express()
 
@@ -21,18 +20,17 @@ app.engine('jsx', require('express-react-views').createEngine())
 app.use(express.urlencoded({extended: true}))
 // MIDDLEWARE
 app.use(methodOverride('_method'))
-//Connect to Mongo using Mongoose
-    //First argument that connect takes is the Mongo URI; 2nd argument contains optional properties that get rid of deprecation warnings
 
+//MONGOOSE connection
 mongoose.set('strictQuery', true);
 mongoose.connect(
-    "mongodb://localhost:27017", 
+    MONGO_URI,
     {
         useNewUrlParser: true, 
         useUnifiedTopology: true
-    }, 
-    () => { console.log('connected to mongo: ', MONGO_URI) }
-)  
+    }).then(
+        () => { console.log('connected to mongo: ', MONGO_URI) }
+  )  //
 
 
 //ROUTES
@@ -55,4 +53,3 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
     console.log('listening on port', PORT);
 })
-

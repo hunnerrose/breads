@@ -1,19 +1,18 @@
 const express = require('express')
 const bread_router = express.Router()
 const bread_data = require('../models/bread.js')
+const Bread = require('../models/bread.js')
 
-  //My index page is not loading; not sure why;
-    //Double checked my MongoDB and a breads database was still not created. Not sure why, I followed all of the steps in the modules and even tried troubleshooting/updating a few things; index page still isn't loading nor is the breads database being created :(
 //INDEX
 bread_router.get('/', (req, res) => {
-    bread_data.find().then((foundBread_data) => {
-      res.render('index', {
-        breads: foundBread_data,
-        title: 'Index Page'
-      }) ;
-      // console.log(foundBread_data)
-    })
-
+    Bread.find()
+      .then(foundBreads => {
+        res.render('index', {
+          breads: foundBreads,
+          titlee: 'Index Page'
+        })
+      })
+    // res.render('index', {"breads": bread_data})
 
   // res.send(Bread)
 })
@@ -47,14 +46,14 @@ bread_router.get('/:arrayIndex', (req, res) => {
 bread_router.post('/', (req, res) => {
     //why does this call for an exclamation mark? v
     if (!req.body.image) {
-      req.body.image = undefined
+      req.body.image = 'https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'
     }
     if(req.body.hasGluten === 'on') {
       req.body.hasGluten = true
     } else {
       req.body.hasGluten = false
     }
-    bread_data.create(req.body)
+    bread_data.push(req.body)
     res.redirect('/breads')
   })
 

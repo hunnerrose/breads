@@ -16,7 +16,6 @@ const React = require('react')
             </div>
         </div>
 </body>
-
     </html>
   )
 } */
@@ -48,4 +47,3 @@ function Default(html) {
 
 
 module.exports = Default
-
