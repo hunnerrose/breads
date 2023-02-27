@@ -9,7 +9,7 @@ function Show ({bread, index}) {
         <h2>Show Page</h2>
         <h3>{bread.name}</h3>
         
-        <form action={`/breads/${index}?_method=DELETE`} method="POST">
+        <form action={`/breads/${bread.id}?_method=DELETE`} method="POST">
             <input type='submit' value="DELETE"/>
         </form>
 
@@ -22,7 +22,7 @@ function Show ({bread, index}) {
             have gluten.
         </p>
         <img src={bread.image} alt={bread.name} />
-        <a href={`/breads/${index}/edit`}><button>Edit</button></a>
+        <a href={`/breads/${bread.id}/edit`}><button>Edit</button></a>
         <li><a href="/breads">Go home</a></li>
       </Default>
     )

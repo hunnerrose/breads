@@ -23,11 +23,17 @@ bread_router.get('/new', (req, res) => {
 })
 
  // EDIT
- bread_router.get('/:indexArray/edit', (req, res) => {
-    res.render('edit', {
-      bread: bread_data[req.params.indexArray],
-      index: req.params.indexArray
-    })
+ bread_router.get('/:id/edit', (req, res) => {
+    bread_data.findById(req.params.id)
+      .then(foundBread => {
+        res.render('edit', {
+          bread: foundBread
+        })
+      })
+    // res.render('edit', {
+    //   bread: bread_data[req.params.indexArray],
+    //   index: req.params.indexArray
+    // })
 })
 
 //SHOW
@@ -72,22 +78,33 @@ bread_router.post('/', (req, res) => {
   })
 
   // UPDATE
-bread_router.put('/:arrayIndex', (req, res) => {
+bread_router.put('/:id', (req, res) => {
     if(req.body.hasGluten === 'on'){
       req.body.hasGluten = true
     } else {
       req.body.hasGluten = false
     }
-    bread_data[req.params.arrayIndex] = req.body
-    res.redirect(`/breads/${req.params.arrayIndex}`)
+    //req.body captures everything the user types into a form and capture it; 'new: true' ensures that the document that gets returned is the updated one
+    bread_data.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .then(updatedBread => {
+        console.log(updatedBread)
+        res.redirect(`/breads/${req.params.id}`)
+      })
+
+    // bread_data[req.params.arrayIndex] = req.body
+    // res.redirect(`/breads/${req.params.arrayIndex}`)
   })
   
   
   // DELETE
-bread_router.delete('/:indexArray', (req, res) => {
+bread_router.delete('/:id', (req, res) => {
+    bread_data.findByIdAndDelete(req.params.id)
+      .then(deletedBread => {
+        res.status(303).redirect('/breads')
+      })
     //Splice effectively removes items from an array
-    bread_data.splice(req.params.indexArray, 1)
-    res.status(303).redirect('/breads')
+      // bread_data.splice(req.params.indexArray, 1)
+      // res.status(303).redirect('/breads')
   })
   
 
