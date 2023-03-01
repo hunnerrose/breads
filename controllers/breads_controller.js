@@ -42,6 +42,10 @@ bread_router.get('/:id', (req, res) => {
         //to be semantic, we'll name the variable foundBread. It's singular bc we only expect data for one bread.
     Bread.findById(req.params.id)
       .then(foundBread => {
+        //declare instance method function created in bread.js on returned document in show route; this would be the foundBread variable where the doc gets returned to us
+        const bakedBy = foundBread.getBakedBy()
+        console.log(bakedBy)
+        //render show page
         res.render('show', {
           bread: foundBread
         })
