@@ -2,6 +2,7 @@ const express = require('express')
 const bread_router = express.Router()
 const bread_data = require('../models/bread.js')
 const Bread = require('../models/bread.js')
+const baker_router = require('../models/baker.js')
 
 //INDEX
 bread_router.get('/', (req, res) => {
@@ -19,7 +20,12 @@ bread_router.get('/', (req, res) => {
 
 // NEW
 bread_router.get('/new', (req, res) => {
-    res.render('new')
+  baker_router.find()
+    .then(foundBakers => {
+      res.render('new', {
+        bakers: foundBakers
+      })
+    })
 })
 
  // EDIT
