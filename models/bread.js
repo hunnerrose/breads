@@ -9,9 +9,10 @@ const breadSchema = new Schema ({
   hasGluten: Boolean,
   image: {type: String, default: 'http://placehold.it/500x500.png'},
   baker: {
-    type: String,
+    type: Schema.Types.ObjectID,
+    ref: 'Baker'
       //validate so that hackers can't use DevTools to save/input a non-baker
-    enum: ['Rachel', 'Monica', 'Joey', 'Chandler', 'Ross', 'Phoebe']
+      // enum: ['Rachel', 'Monica', 'Joey', 'Chandler', 'Ross', 'Phoebe']
   }
 })
 
