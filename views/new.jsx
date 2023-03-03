@@ -25,7 +25,7 @@ function New ({bakers}) {
           <select name="baker" id="baker">
             {bakers.map((baker) => {
               return(
-                <option value={baker.id}>{baker.name}</option>
+                <option value={baker.id} key={baker.id}>{baker.name}</option>
               )
             })}
           </select>
