@@ -5,7 +5,17 @@ const Bread = require('../models/bread.js')
 const baker_data = require('../models/baker.js')
 
 //INDEX
-bread_router.get('/', (req, res) => {
+bread_router.get('/', async (req, res) => {
+  const foundBakers = await baker_data.find()
+  const foundBreads = await Bread.find.find()
+  res.render('index', {
+    breads: foundBreads, 
+    bakers: foundBakers,
+    title: 'Index Page'
+  })
+})
+
+/* bread_router.get('/', (req, res) => {
   baker_data.find()
     .then(foundBakers => {
       Bread.find()
@@ -20,7 +30,7 @@ bread_router.get('/', (req, res) => {
     // res.render('index', {"breads": bread_data})
 
   // res.send(Bread)
-})
+}) */
 
 // NEW
 bread_router.get('/new', (req, res) => {
