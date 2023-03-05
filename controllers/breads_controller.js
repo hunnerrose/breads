@@ -30,11 +30,15 @@ bread_router.get('/new', (req, res) => {
 
  // EDIT
  bread_router.get('/:id/edit', (req, res) => {
-    bread_data.findById(req.params.id)
-      .then(foundBread => {
-        res.render('edit', {
-          bread: foundBread
-        })
+    baker_router.find()
+      .then(foundBakers => {
+        bread_data.findById(req.params.id)
+          .then(foundBread => {
+            res.render('edit', {
+              bread: foundBread,
+              bakers: foundBakers
+            })
+          })
       })
     // res.render('edit', {
     //   bread: bread_data[req.params.indexArray],
@@ -47,6 +51,7 @@ bread_router.get('/:id', (req, res) => {
       //.findById returns a promise that holds the return data. Use .then on the method and pass it a callback w/ a variable like we did for .find
         //to be semantic, we'll name the variable foundBread. It's singular bc we only expect data for one bread.
     Bread.findById(req.params.id)
+      .populate('baker')
       .then(foundBread => {
         //declare instance method function created in bread.js on returned document in show route; this would be the foundBread variable where the doc gets returned to us
         const bakedBy = foundBread.getBakedBy()
