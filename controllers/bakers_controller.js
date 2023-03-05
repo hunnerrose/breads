@@ -23,7 +23,10 @@ baker_router.get('/', (req, res) => {
 //Show:
 baker_router.get('/:id', (req, res) => {
     bakerData.findById(req.params.id)
-        .populate('breads')
+        .populate({
+            path: 'breads',
+            options: {limit: 2}
+        })
         .then(foundBaker => {
             res.render('bakerShow', {
                 baker: foundBaker
