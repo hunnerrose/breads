@@ -2,17 +2,21 @@ const express = require('express')
 const bread_router = express.Router()
 const bread_data = require('../models/bread.js')
 const Bread = require('../models/bread.js')
-const baker_router = require('../models/baker.js')
+const baker_data = require('../models/baker.js')
 
 //INDEX
 bread_router.get('/', (req, res) => {
-    Bread.find()
-      .then(foundBreads => {
-        res.render('index', {
-          breads: foundBreads,
-          title: 'Index Page'
+  baker_data.find()
+    .then(foundBakers => {
+      Bread.find()
+        .then(foundBreads => {
+          res.render('index', {
+            breads: foundBreads,
+            bakers: foundBakers,
+            title: 'Index Page'
+          })
         })
-      })
+    })
     // res.render('index', {"breads": bread_data})
 
   // res.send(Bread)
@@ -20,7 +24,7 @@ bread_router.get('/', (req, res) => {
 
 // NEW
 bread_router.get('/new', (req, res) => {
-  baker_router.find()
+  baker_data.find()
     .then(foundBakers => {
       res.render('new', {
         bakers: foundBakers
@@ -30,7 +34,7 @@ bread_router.get('/new', (req, res) => {
 
  // EDIT
  bread_router.get('/:id/edit', (req, res) => {
-    baker_router.find()
+    baker_data.find()
       .then(foundBakers => {
         bread_data.findById(req.params.id)
           .then(foundBread => {
